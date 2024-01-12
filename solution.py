@@ -1,7 +1,7 @@
 import pygame
 from search import *  
 # Static variables related to generation
-MAZE_DIMENTIONS = (8, 8)
+MAZE_DIMENTIONS = (16, 16)
 R_HEIGHT = R_WIDTH = 50
 W_WIDTH = R_WIDTH * MAZE_DIMENTIONS[0] + 25 + 25 + 200 # Width of maze + 25px on each side +200 -> For adding buttons and stuff
 W_HEIGHT = R_HEIGHT * MAZE_DIMENTIONS[1] + 25 + 25
