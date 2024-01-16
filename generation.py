@@ -14,7 +14,7 @@ class Cell:
         self.thickness = 4
         
     def draw(self, sc):
-        x, y = self.x * R_WIDTH, self.y * R_WIDTH
+        x, y = self.x * R_WIDTH + 25, self.y * R_WIDTH + 25
 
         if self.walls['top']:
             pygame.draw.line(sc, pygame.Color('black'), (x, y), (x + R_WIDTH, y), self.thickness)
@@ -26,18 +26,18 @@ class Cell:
             pygame.draw.line(sc, pygame.Color('black'), (x, y + R_WIDTH), (x, y), self.thickness)
 
     def draw_start(self, screen):
-        x, y = self.x * R_WIDTH, self.y * R_WIDTH
+        x, y = self.x * R_WIDTH + 25, self.y * R_WIDTH + 25
         pygame.draw.rect(screen, pygame.Color('red'), [x, y, R_WIDTH, R_WIDTH])
         self.draw(screen)
 
     def draw_finish(self, screen, finish):
-        x, y = self.x * R_WIDTH, self.y * R_WIDTH
+        x, y = self.x * R_WIDTH + 25, self.y * R_WIDTH + 25
         rectangle = pygame.draw.rect(screen, pygame.Color('blue'), [x, y, R_WIDTH, R_WIDTH], -1)
         screen.blit(finish, (rectangle.topleft[0] , rectangle.topleft[1] ))
         self.draw(screen)
 
     def draw_current(self, screen, player):
-        x, y = self.x * R_WIDTH, self.y * R_WIDTH
+        x, y = self.x * R_WIDTH + 25, self.y * R_WIDTH + 25
         rectangle = pygame.draw.rect(screen, pygame.Color('black'), [x, y, R_WIDTH- 10, R_WIDTH - 10], -1)
         screen.blit(player, (rectangle.topleft[0]+5, rectangle.topleft[1]+5))
         self.draw(screen)
