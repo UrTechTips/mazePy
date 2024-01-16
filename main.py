@@ -21,6 +21,7 @@ isFinishDefining = False
 
 # Initialization
 pygame.init()
+mixer.init()
 
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT))
 title = pygame.display.set_caption("Laybrinth Legend")
@@ -32,6 +33,8 @@ isPlayerRight = True
 finishIco = pygame.transform.smoothscale(pygame.image.load('./assets/Finish.png'), (R_WIDTH, R_WIDTH))
 footprintIco = pygame.transform.smoothscale(pygame.image.load('./assets/footprint.png'), (R_WIDTH - 5, R_HEIGHT - 5))
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
+mixer.music.load("./assets/bgm.mp3")
+mixer.music.play()
 
 pygame.display.set_icon(icon)
 finished = False
