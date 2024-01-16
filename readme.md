@@ -11,6 +11,12 @@
 
 -   To run the game clone the repository and then install the modules in requirements.txt and then run `python3 runner.py`
 
+## Demo
+
+-   Visit this link for the demo on the first build of the game `https://drive.google.com/file/d/1Ccd2YPGro_KCZrLzxiRifMP4aUjxzWB-/view?usp=sharing`
+
+> The Demo might not be up to date on the current build of the game. It was recorded in the inital stages of the development.
+
 # Playing
 
 -   To play the mode where you solve the maze use **W, A, S, D** to navigate through the maze.
