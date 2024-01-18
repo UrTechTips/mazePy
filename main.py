@@ -1,9 +1,9 @@
 import pygame
 import solution 
 import generation
-from pygame import mixer
 import time
-import pyttsx3
+from pygame import mixer
+from utils import text, button
 
 # Defining Static Variables 
 MAZE_DIMENTIONS = (16, 16)
@@ -40,6 +40,7 @@ pygame.display.set_icon(icon)
 finished = False
 gameFinished = False
 scene = None
+previousTime, lowestTime = None, None
 
 maze, genStart, genFinish = generation.generate_maze()
 keys = {'a': pygame.K_a, 'd': pygame.K_d, 'w': pygame.K_w, 's': pygame.K_s}
@@ -73,25 +74,12 @@ def drawHomeScreen(mouse_pos):
     screen.blit(name, ((W_WIDTH / 2) - (name.get_width() / 2), 0))
 
     buttonStartPos = (W_WIDTH / 2) - (name.get_width()  / 4)
-    buttonEndPos = (W_WIDTH / 2) + (name.get_width()  / 4)
     buttonTopPos = 50 + name.get_height() + y
     buttonWidth = (name.get_width() // 2 ) 
     buttonHeight = 50
 
-    # Buttons
-    solTxt = my_font.render("I'll solve", True, (27, 26, 50))
-    if buttonStartPos <= mouse_pos[0] <= buttonEndPos and buttonTopPos <= mouse_pos[1] <= buttonTopPos + buttonHeight: 
-        generationBtn = pygame.draw.rect(screen, (245, 247, 247), [buttonStartPos, buttonTopPos, buttonWidth, buttonHeight])
-    else: 
-        generationBtn = pygame.draw.rect(screen, (186, 183, 210), [buttonStartPos, buttonTopPos, buttonWidth, buttonHeight]) 
-    screen.blit(solTxt, (generationBtn.center[0] - solTxt.get_width()/2, generationBtn.center[1] - solTxt.get_height()/2))
-
-    genTxt = my_font.render("I'll create", False, (27, 26, 50))
-    if buttonStartPos <= mouse_pos[0] <= buttonEndPos and buttonTopPos + 100 <= mouse_pos[1] <= buttonTopPos + 100 + buttonHeight: 
-        solutionBtn = pygame.draw.rect(screen, (245, 247, 247), [buttonStartPos, buttonTopPos + 100, buttonWidth, buttonHeight]) 
-    else: 
-        solutionBtn = pygame.draw.rect(screen, (186, 183, 210), [buttonStartPos, buttonTopPos + 100, buttonWidth, buttonHeight]) 
-    screen.blit(genTxt, (solutionBtn.center[0] - genTxt.get_width()/2, solutionBtn.center[1] - genTxt.get_height()/2))
+    generationBtn = button(screen, mouse_pos, (buttonStartPos, buttonTopPos), "I'll solve", (buttonWidth, buttonHeight))
+    solutionBtn = button(screen, mouse_pos, (buttonStartPos, buttonTopPos + 100), "I'll create", (buttonWidth, buttonHeight))
     
     return generationBtn, solutionBtn
 
@@ -109,6 +97,7 @@ def switchScene(currentScene):
 while not finished:
     screen.fill((139, 195, 75))
 
+    #! Main Menu Screen
     if scene == None:
         screen.fill((27, 26, 50))
         mouse_position = pygame.mouse.get_pos()
@@ -125,6 +114,7 @@ while not finished:
                 elif solBtn.collidepoint(mouse_position):
                     scene = 'sol'
 
+    #! You generate the maze
     elif scene == 'sol':
         rectangles = solution.draw_rectangles(screen, start, finish, walls, path, finishIco, footprintIco)
         mouse_position = pygame.mouse.get_pos()
@@ -154,25 +144,30 @@ while not finished:
                     if rectangle.collidepoint(mouse_position):
                         setRectangle(rectangles.index(rectangle))
 
+    #! You solve the maze
     elif scene == 'gen':
         now = time.time()
         duration = now - startTime
         if generate_current_position == genFinish:
             startTime = time.time()
+            previousTime = duration
+            if not lowestTime or duration < lowestTime :
+                lowestTime = duration
             ding = mixer.Sound('./assets/ding-36029.mp3')
             ding.play()
             resetGeneration()
 
-        timerText = my_font.render("{}s".format(round(duration, 2)), True, (255, 255, 255))
-        screen.blit(timerText, (R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 - 100))
-        modeButtonTxt = my_font.render("I'll Create", True, (255, 255, 255))
-        mouse_pos = pygame.mouse.get_pos()
-        if R_WIDTH * MAZE_DIMENTIONS[0] + 40 <= mouse_pos[0] <= R_WIDTH * MAZE_DIMENTIONS[0] + 40+140 and W_HEIGHT/2 <= mouse_pos[1] <= W_HEIGHT/2+40: 
-            sceneChange_button = pygame.draw.rect(screen, (0, 255, 154), [R_WIDTH * MAZE_DIMENTIONS[0] + 40, W_HEIGHT/2, modeButtonTxt.get_width() + 40, 40]) 
-        else: 
-            sceneChange_button = pygame.draw.rect(screen, (0, 154, 255), [R_WIDTH * MAZE_DIMENTIONS[0] + 40, W_HEIGHT/2, modeButtonTxt.get_width() + 40, 40]) 
-        screen.blit(modeButtonTxt, (sceneChange_button.center[0] - modeButtonTxt.get_width()/2, sceneChange_button.center[1] - modeButtonTxt.get_height()/2))
+        if lowestTime:
+            text(screen, "Fastest Time:", (0, 0, 0), (R_WIDTH * MAZE_DIMENTIONS[0] + 40, 100))
+            text(screen, "{}s".format(round(lowestTime, 2)), (0, 0, 0), (R_WIDTH * MAZE_DIMENTIONS[0] + 40, 150))
+        if previousTime:
+            text(screen, "Previous Time:", (0, 0, 0), (R_WIDTH * MAZE_DIMENTIONS[0] + 40, 200))
+            text(screen, "{}s".format(round(previousTime, 2)), (0, 0, 0), (R_WIDTH * MAZE_DIMENTIONS[0] + 40, 250))
 
+        text(screen, "Time: {}s".format(round(duration, 2)), (0, 0, 0), (R_WIDTH * MAZE_DIMENTIONS[0] + 40, W_HEIGHT/2 - 100))
+
+        mouse_pos = pygame.mouse.get_pos()
+        sceneChange_button = button(screen, mouse_pos, (R_WIDTH * MAZE_DIMENTIONS[0] + 40, W_HEIGHT/2), "I'll Create")
 
         availableMovements = []
         for cell in maze:
@@ -195,7 +190,6 @@ while not finished:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if sceneChange_button.collidepoint(mouse_pos):
-                    print('SceneSwitch')
                     scene = switchScene(scene)
                     
             if event.type == pygame.KEYDOWN:

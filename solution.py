@@ -1,5 +1,6 @@
 import pygame
 from search import *  
+from utils import button
 # Static variables related to generation
 MAZE_DIMENTIONS = (16, 16)
 R_HEIGHT = R_WIDTH = 50
@@ -52,36 +53,12 @@ def draw_rectangles(screen, start, finish, walls, path, finish_icon, path_icon):
     return rectangles
 
 def draw_buttons(screen, mouse_pos, my_font):
-    if R_WIDTH * MAZE_DIMENTIONS[0] + 80 <= mouse_pos[0] <= R_WIDTH * MAZE_DIMENTIONS[0] + 80+50 and W_HEIGHT/2 - 70 <= mouse_pos[1] <= W_HEIGHT/2-30: 
-        startBtn = pygame.draw.rect(screen, (0, 255, 154), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 - 70, 50, 40]) 
-    else: 
-        startBtn = pygame.draw.rect(screen, (0, 154, 255), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 - 70, 50, 40]) 
+    startBtn = button(screen, mouse_pos, (R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 - 70), "S")
+    finishBtn = button(screen, mouse_pos, (R_WIDTH * MAZE_DIMENTIONS[0] + 160, W_HEIGHT/2 - 70), "F")
     
-    if R_WIDTH * MAZE_DIMENTIONS[0] + 160 <= mouse_pos[0] <= R_WIDTH * MAZE_DIMENTIONS[0] + 160 + 50 and W_HEIGHT/2 - 70 <= mouse_pos[1] <= W_HEIGHT/2-30: 
-        finishBtn = pygame.draw.rect(screen, (0, 255, 154), [R_WIDTH * MAZE_DIMENTIONS[0] + 160, W_HEIGHT/2 - 70, 50, 40]) 
-    else: 
-        finishBtn = pygame.draw.rect(screen, (0, 154, 255), [R_WIDTH * MAZE_DIMENTIONS[0] + 160, W_HEIGHT/2 - 70, 50, 40]) 
-    
-    solveTxt = my_font.render('Solve', True, (255, 255, 255))
-    if R_WIDTH * MAZE_DIMENTIONS[0] + 80 <= mouse_pos[0] <= R_WIDTH * MAZE_DIMENTIONS[0] + 80+140 and W_HEIGHT/2 <= mouse_pos[1] <= W_HEIGHT/2+40: 
-        solveMazeBtn = pygame.draw.rect(screen, (0, 255, 154), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2, solveTxt.get_width() + 40, 40]) 
-    else: 
-        solveMazeBtn = pygame.draw.rect(screen, (0, 154, 255), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2, solveTxt.get_width() + 40, 40]) 
-    screen.blit(solveTxt, (solveMazeBtn.center[0] - solveTxt.get_width()/2, solveMazeBtn.center[1] - solveTxt.get_height()/2))
-
-    resetTxt = my_font.render('Reset', True, (255, 255, 255))
-    if R_WIDTH * MAZE_DIMENTIONS[0] + 80 <= mouse_pos[0] <= R_WIDTH * MAZE_DIMENTIONS[0] + 80+140 and W_HEIGHT/2+70 <= mouse_pos[1] <= W_HEIGHT/2 + 70+40: 
-        resetBtn = pygame.draw.rect(screen, (0, 255, 154), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 + 70, resetTxt.get_width() + 40, 40]) 
-    else: 
-        resetBtn = pygame.draw.rect(screen, (0, 154, 255), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 + 70, resetTxt.get_width() + 40, 40]) 
-    screen.blit(resetTxt, (resetBtn.center[0] - resetTxt.get_width()/2, resetBtn.center[1] - resetTxt.get_height()/2))
-
-    sceneChangeTxt = my_font.render("I'll Solve", True, (255, 255, 255))
-    if R_WIDTH * MAZE_DIMENTIONS[0] + 80 <= mouse_pos[0] <= R_WIDTH * MAZE_DIMENTIONS[0] + 80+140 and W_HEIGHT/2+140 <= mouse_pos[1] <= W_HEIGHT/2 + 140+40: 
-        sceneChange = pygame.draw.rect(screen, (0, 255, 154), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 + 140, sceneChangeTxt.get_width() + 40, 40]) 
-    else: 
-        sceneChange = pygame.draw.rect(screen, (0, 154, 255), [R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 + 140, sceneChangeTxt.get_width() + 40, 40]) 
-    screen.blit(sceneChangeTxt, (sceneChange.center[0] - sceneChangeTxt.get_width()/2, sceneChange.center[1] - sceneChangeTxt.get_height()/2))
+    solveMazeBtn = button(screen, mouse_pos, (R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2), 'Solve')
+    resetBtn = button(screen, mouse_pos, (R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 + 70), 'Reset')
+    sceneChange = button(screen, mouse_pos, (R_WIDTH * MAZE_DIMENTIONS[0] + 80, W_HEIGHT/2 + 140), "I'll Solve")
 
     return (startBtn, finishBtn, solveMazeBtn, resetBtn, sceneChange)
 
