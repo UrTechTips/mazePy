@@ -26,7 +26,7 @@ def solveMaze(path, walls, start, finish):
         path.add(currentPos)
 
 
-def draw_rectangles(screen, start, finish, walls, path, finish_icon, path_icon):
+def draw_rectangles(screen, start, finish, walls, path, finish_icon, path_icon, start_icon):
     left = 25
     top = 25
     rectangles = []
@@ -34,14 +34,15 @@ def draw_rectangles(screen, start, finish, walls, path, finish_icon, path_icon):
     for i in range(MAZE_DIMENTIONS[1]):
         for j in range(MAZE_DIMENTIONS[0]):
             if (i, j) == start:
-                rectangle = pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT))
+                rectangle = pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT), 2)
+                screen.blit(start_icon, (rectangle.topleft[0], rectangle.topleft[1]))
             elif (i, j) == finish:
-                rectangle = pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT), -1)
+                rectangle = pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT), 2)
                 screen.blit(finish_icon, (rectangle.topleft[0], rectangle.topleft[1]))
             elif (i, j) in walls:
                 rectangle = pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT))
             elif (i, j) in path:
-                rectangle = pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(left, top, R_WIDTH, R_HEIGHT), -1)
+                rectangle = pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT), 2)
                 screen.blit(path_icon, (rectangle.topleft[0], rectangle.topleft[1]))
             else:
                 rectangle = pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(left, top, R_WIDTH, R_HEIGHT), 2)

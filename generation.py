@@ -25,9 +25,10 @@ class Cell:
         if self.walls['left']:
             pygame.draw.line(sc, pygame.Color('black'), (x, y + R_WIDTH), (x, y), self.thickness)
 
-    def draw_start(self, screen):
+    def draw_start(self, screen, start_icon):
         x, y = self.x * R_WIDTH + 25, self.y * R_WIDTH + 25
-        pygame.draw.rect(screen, pygame.Color('red'), [x, y, R_WIDTH, R_WIDTH])
+        rectangle = pygame.draw.rect(screen, pygame.Color('red'), [x, y, R_WIDTH, R_WIDTH], -1)
+        screen.blit(start_icon, (rectangle.topleft[0] , rectangle.topleft[1] ))
         self.draw(screen)
 
     def draw_finish(self, screen, finish):

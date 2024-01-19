@@ -31,9 +31,11 @@ name = pygame.transform.smoothscale(name, (W_WIDTH / 2, (name.get_height() / nam
 player = pygame.transform.smoothscale(pygame.image.load('./assets/player.png'), (R_WIDTH - 10, R_WIDTH - 10))
 isPlayerRight = True
 finishIco = pygame.transform.smoothscale(pygame.image.load('./assets/Finish.png'), (R_WIDTH, R_WIDTH))
-footprintIco = pygame.transform.smoothscale(pygame.image.load('./assets/footprint.png'), (R_WIDTH - 5, R_HEIGHT - 5))
+startIco = pygame.transform.smoothscale(pygame.image.load('./assets/Start.png'), (R_WIDTH, R_WIDTH))
+footprintIco = pygame.transform.rotate(pygame.transform.smoothscale(pygame.image.load('./assets/footprint.png'), (R_WIDTH - 5, R_HEIGHT - 5)), 270)
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 mixer.music.load("./assets/bgm.mp3")
+mixer.music.set_volume(0.4)
 mixer.music.play()
 
 pygame.display.set_icon(icon)
@@ -116,7 +118,7 @@ while not finished:
 
     #! You generate the maze
     elif scene == 'sol':
-        rectangles = solution.draw_rectangles(screen, start, finish, walls, path, finishIco, footprintIco)
+        rectangles = solution.draw_rectangles(screen, start, finish, walls, path, finishIco, footprintIco, startIco)
         mouse_position = pygame.mouse.get_pos()
         start_button, finish_button, solve_button, reset_button, sceneChange_button = solution.draw_buttons(screen, mouse_position, my_font)
         
@@ -178,7 +180,7 @@ while not finished:
                     if value == False:
                         availableMovements.append(key)
             elif cell == generation.check_cell(maze, genStart[0], genStart[1]):
-                cell.draw_start(screen)
+                cell.draw_start(screen, startIco)
             elif cell == generation.check_cell(maze, genFinish[0], genFinish[1]):
                 cell.draw_finish(screen, finishIco)
             else:
