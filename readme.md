@@ -15,11 +15,10 @@
 
 -   Visit this link for the demo on the first build of the game `https://drive.google.com/file/d/1Ccd2YPGro_KCZrLzxiRifMP4aUjxzWB-/view?usp=sharing`
 
-# Playing
+ttps://github.com/UrTechTips/mazePy/assets/66728798/fb3683e5-0161-4b42-b0bd-bfeab1e116fb
 > The Demo might not be up to date on the current build of the game. It was recorded in the inital stages of the development.
 
-https://github.com/UrTechTips/mazePy/assets/66728798/fb3683e5-0161-4b42-b0bd-bfeab1e116fb
-
+# Playing
 
 -   To play the mode where you solve the maze use **W, A, S, D** to navigate through the maze.
 -   To play the mode whre you generate the maze use the first small button to place the starting point and second small button to place the finishing point. Then use 1st big button to solve the maze and 2nd big button to reset the maze.
