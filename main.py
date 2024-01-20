@@ -8,7 +8,7 @@ from utils import text, button
 # Defining Static Variables 
 MAZE_DIMENTIONS = (16, 16)
 R_HEIGHT = R_WIDTH = 50
-W_WIDTH = R_WIDTH * MAZE_DIMENTIONS[0] + 25 + 25 + 200 # Width of maze + 25px on each side +200 -> For adding buttons and stuff
+W_WIDTH = R_WIDTH * MAZE_DIMENTIONS[0] + 25 + 25 + 200 
 W_HEIGHT = R_HEIGHT * MAZE_DIMENTIONS[1] + 25 + 25
 
 walls = set()
@@ -34,9 +34,6 @@ finishIco = pygame.transform.smoothscale(pygame.image.load('./assets/Finish.png'
 startIco = pygame.transform.smoothscale(pygame.image.load('./assets/Start.png'), (R_WIDTH, R_WIDTH))
 footprintIco = pygame.transform.rotate(pygame.transform.smoothscale(pygame.image.load('./assets/footprint.png'), (R_WIDTH - 5, R_HEIGHT - 5)), 270)
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
-mixer.music.load("./assets/bgm.mp3")
-mixer.music.set_volume(0.4)
-mixer.music.play()
 
 pygame.display.set_icon(icon)
 finished = False
@@ -94,7 +91,6 @@ def switchScene(currentScene):
         newScene = "gen"
         startTime = time.time()
     return newScene
-
 
 while not finished:
     screen.fill((139, 195, 75))
