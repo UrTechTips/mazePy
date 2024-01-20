@@ -13,7 +13,7 @@
 
 ## Demo
 
--   Visit this link for the demo on the first build of the game `https://drive.google.com/file/d/1Ccd2YPGro_KCZrLzxiRifMP4aUjxzWB-/view?usp=sharing`
+-   Visit this link for the demo on the first build of the game [https://drive.google.com/file/d/1Ccd2YPGro_KCZrLzxiRifMP4aUjxzWB-/view?usp=sharing](https://drive.google.com/file/d/1nrOYA6Eh0JtylKjYFSoRDjPtLAYpa5cv/view?usp=sharing)
 
 https://github.com/UrTechTips/mazePy/assets/66728798/d6328b6d-7eca-485d-9d68-658e4c1aa774
 
