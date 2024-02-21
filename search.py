@@ -68,7 +68,7 @@ class BFS():
         queue.add(start)
 
         while True:
-            print([x.position for x in queue.queue])
+            # print([x.position for x in queue.queue])
             if queue.empty():
                 break
 

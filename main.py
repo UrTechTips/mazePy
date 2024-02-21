@@ -83,13 +83,15 @@ def drawHomeScreen(mouse_pos):
     return generationBtn, solutionBtn
 
 startTime = None
-def switchScene(currentScene):
+def switchScene(nextScene):
     global startTime
-    if currentScene == "gen":
-        newScene = "sol"
-    elif currentScene == "sol":
+    if nextScene == "gen":
         newScene = "gen"
         startTime = time.time()
+    elif nextScene == "sol":
+        newScene = "sol"
+    elif nextScene == "finish":
+        newScene = "finish"
     return newScene
 
 while not finished:
@@ -132,7 +134,7 @@ while not finished:
                     print('finish')
                     isFinishDefining = True
                 if sceneChange_button.collidepoint(mouse_position):
-                    scene = switchScene(scene)
+                    scene = switchScene('gen')
                 if reset_button.collidepoint(mouse_position):
                     walls = set()
                     path = set()
@@ -153,7 +155,7 @@ while not finished:
                 lowestTime = duration
             ding = mixer.Sound('./assets/ding-36029.mp3')
             ding.play()
-            resetGeneration()
+            scene = switchScene("finish")
 
         if lowestTime:
             text(screen, "Fastest Time:", (0, 0, 0), (R_WIDTH * MAZE_DIMENTIONS[0] + 40, 100))
@@ -188,24 +190,46 @@ while not finished:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if sceneChange_button.collidepoint(mouse_pos):
-                    scene = switchScene(scene)
+                    scene = switchScene('sol')
                     
             if event.type == pygame.KEYDOWN:
-                if event.key in list(keys.values()):
-                    if event.key == pygame.K_a and 'left' in availableMovements:
+                # if event.key in list(keys.values()):
+                    print(event.key)
+                    if (event.key == pygame.K_a or event.key == pygame.K_LEFT) and 'left' in availableMovements:
                         if isPlayerRight:
                             isPlayerRight = not isPlayerRight
                             player = pygame.transform.flip(player, True, False) 
                         generate_current_position = generate_current_position[0], generate_current_position[1] - 1
-                    elif event.key == pygame.K_w and 'top' in availableMovements:
+                    elif (event.key == pygame.K_w or event.key == pygame.K_UP) and 'top' in availableMovements:
                         generate_current_position = generate_current_position[0] - 1, generate_current_position[1]
-                    elif event.key == pygame.K_s and 'bottom' in availableMovements:
+                    elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and 'bottom' in availableMovements:
                         generate_current_position = generate_current_position[0] + 1, generate_current_position[1]
-                    elif event.key == pygame.K_d and 'right' in availableMovements:
+                    elif (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and 'right' in availableMovements:
                         if not isPlayerRight:
                             isPlayerRight = not isPlayerRight
                             player = pygame.transform.flip(player, True, False) 
                         generate_current_position = generate_current_position[0], generate_current_position[1] + 1
 
+    elif scene == "finish":
+        text(screen, "Completed", (0, 0, 0), (W_WIDTH//2, 200), True, 75)
+
+        if previousTime:
+            text(screen, "Your Time: {}s".format(round(previousTime, 2)), (0, 0, 0), (W_WIDTH//2, 300), True)
+
+        mouse_pos = pygame.mouse.get_pos()
+        restart_button = button(screen, mouse_pos, (W_WIDTH//2, 500), 'Restart', center=True, size=(175, 50))
+        create_button = button(screen, mouse_pos, (W_WIDTH//2, 600), "I'll Create", center=True, size=(175, 50))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button.collidepoint(mouse_pos):
+                    scene = switchScene('gen')
+                
+                if create_button.collidepoint(mouse_pos):
+                    scene = switchScene('sol')
+
+                resetGeneration()
     pygame.display.flip()
 pygame.quit()

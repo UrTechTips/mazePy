@@ -43,7 +43,6 @@ class Cell:
         screen.blit(player, (rectangle.topleft[0]+5, rectangle.topleft[1]+5))
         self.draw(screen)
         
-
     def get_rects(self):
         rects = []
         x, y = self.x * R_WIDTH, self.y * R_WIDTH
