@@ -27,7 +27,7 @@ def button(screen, mouse_position, position, text, size = None, center = None):
             button = pygame.draw.rect(screen, (0, 255, 154), [position[0], position[1], size[0], size[1]]) 
         else: 
             button = pygame.draw.rect(screen, (0, 154, 255), [position[0], position[1], size[0], size[1]]) 
-
+    # Comment
     screen.blit(text_surface, (button.center[0] - text_surface.get_width()/2, button.center[1] - text_surface.get_height()/2))
 
     return button
