@@ -25,14 +25,14 @@ mixer.init()
 
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT))
 title = pygame.display.set_caption("Laybrinth Legend")
-icon = pygame.image.load('./assests/logo.png')
-name = pygame.image.load('./assests/logoReveal.jpg')
+icon = pygame.image.load('./assets/logo.png')
+name = pygame.image.load('./assets/logoReveal.jpg')
 name = pygame.transform.smoothscale(name, (W_WIDTH / 2, (name.get_height() / name.get_width()) * W_WIDTH / 2))
-player = pygame.transform.smoothscale(pygame.image.load('./assests/player.png'), (R_WIDTH - 10, R_WIDTH - 10))
+player = pygame.transform.smoothscale(pygame.image.load('./assets/player.png'), (R_WIDTH - 10, R_WIDTH - 10))
 isPlayerRight = True
-finishIco = pygame.transform.smoothscale(pygame.image.load('./assests/Finish.png'), (R_WIDTH, R_WIDTH))
-startIco = pygame.transform.smoothscale(pygame.image.load('./assests/Start.png'), (R_WIDTH, R_WIDTH))
-footprintIco = pygame.transform.rotate(pygame.transform.smoothscale(pygame.image.load('./assests/footprint.png'), (R_WIDTH - 5, R_HEIGHT - 5)), 270)
+finishIco = pygame.transform.smoothscale(pygame.image.load('./assets/Finish.png'), (R_WIDTH, R_WIDTH))
+startIco = pygame.transform.smoothscale(pygame.image.load('./assets/Start.png'), (R_WIDTH, R_WIDTH))
+footprintIco = pygame.transform.rotate(pygame.transform.smoothscale(pygame.image.load('./assets/footprint.png'), (R_WIDTH - 5, R_HEIGHT - 5)), 270)
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 
 pygame.display.set_icon(icon)
@@ -153,7 +153,7 @@ while not finished:
             previousTime = duration
             if not lowestTime or duration < lowestTime :
                 lowestTime = duration
-            ding = mixer.Sound('./assests/ding-36029.mp3')
+            ding = mixer.Sound('./assets/ding-36029.mp3')
             ding.play()
             scene = switchScene("finish")
 
